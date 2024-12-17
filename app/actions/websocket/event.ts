@@ -4,6 +4,7 @@
 import * as bookmark from '@actions/local/channel_bookmark';
 import * as calls from '@calls/connection/websocket_event_handlers';
 import {WebsocketEvents} from '@constants';
+import * as playbooks from '@playbooks/connection/websocket_event_handlers';
 
 import * as category from './category';
 import * as channel from './channel';
@@ -26,9 +27,11 @@ export async function handleWebSocketEvent(serverUrl: string, msg: WebSocketMess
             break;
         case WebsocketEvents.POST_EDITED:
             posts.handlePostEdited(serverUrl, msg);
+            playbooks.handlePostEdited(serverUrl, msg);
             break;
         case WebsocketEvents.POST_DELETED:
             posts.handlePostDeleted(serverUrl, msg);
+            playbooks.handlePostDeleted(serverUrl, msg);
             break;
         case WebsocketEvents.POST_UNREAD:
             posts.handlePostUnread(serverUrl, msg);
@@ -58,9 +61,11 @@ export async function handleWebSocketEvent(serverUrl: string, msg: WebSocketMess
 
         case WebsocketEvents.USER_ADDED:
             channel.handleUserAddedToChannelEvent(serverUrl, msg);
+            playbooks.handleWebsocketUserAdded(serverUrl, msg);
             break;
         case WebsocketEvents.USER_REMOVED:
             channel.handleUserRemovedFromChannelEvent(serverUrl, msg);
+            playbooks.handleWebsocketUserRemoved(serverUrl, msg);
             break;
         case WebsocketEvents.USER_UPDATED:
             handleUserUpdatedEvent(serverUrl, msg);
@@ -99,6 +104,7 @@ export async function handleWebSocketEvent(serverUrl: string, msg: WebSocketMess
             break;
         case WebsocketEvents.CHANNEL_UPDATED:
             channel.handleChannelUpdatedEvent(serverUrl, msg);
+            playbooks.handleChannelUpdated(serverUrl, msg);
             break;
         case WebsocketEvents.CHANNEL_CONVERTED:
             channel.handleChannelConvertedEvent(serverUrl, msg);
@@ -293,6 +299,23 @@ export async function handleWebSocketEvent(serverUrl: string, msg: WebSocketMess
             break;
         case WebsocketEvents.CHANNEL_BOOKMARK_SORTED:
             bookmark.handleBookmarkSorted(serverUrl, msg);
+            break;
+
+        // playbooks
+        case WebsocketEvents.PLAYBOOKS_PLAYBOOK_RUN_UPDATED:
+            playbooks.handlePlaybookRunUpdated(serverUrl, msg);
+            break;
+        case WebsocketEvents.PLAYBOOKS_PLAYBOOK_RUN_CREATED:
+            playbooks.handlePlaybookRunCreated(serverUrl, msg);
+            break;
+        case WebsocketEvents.PLAYBOOKS_PLAYBOOK_CREATED:
+            playbooks.handlePlaybookCreated(serverUrl, msg);
+            break;
+        case WebsocketEvents.PLAYBOOKS_PLAYBOOK_ARCHIVED:
+            playbooks.handlePlaybookArchived(serverUrl, msg);
+            break;
+        case WebsocketEvents.PLAYBOOKS_PLAYBOOK_RESTORED:
+            playbooks.handlePlaybookRestored(serverUrl, msg);
             break;
     }
 }

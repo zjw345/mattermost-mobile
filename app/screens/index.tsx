@@ -57,7 +57,7 @@ const withManagedConfig = (Screen: React.ComponentType) => {
 };
 
 Navigation.setLazyComponentRegistrator((screenName) => {
-    let screen: any|undefined;
+    let screen: any | undefined;
     let extraStyles: StyleProp<ViewStyle>;
     switch (screenName) {
         case Screens.ABOUT:
@@ -282,6 +282,9 @@ Navigation.setLazyComponentRegistrator((screenName) => {
             break;
         case Screens.CALL_HOST_CONTROLS:
             screen = withServerDatabase(require('@calls/screens/host_controls').default);
+            break;
+        case Screens.PLAYBOOKS_CHANNEL_RUNS:
+            screen = withServerDatabase(require('@playbooks/screens/channel_runs').default);
             break;
     }
 

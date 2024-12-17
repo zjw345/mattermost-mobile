@@ -21,6 +21,7 @@ import ChannelInfoAppBindings from './app_bindings';
 import DestructiveOptions from './destructive_options';
 import Extra from './extra';
 import Options from './options';
+import PlaybookRuns from './options/playbook_runs';
 import Title from './title';
 
 import type {AvailableScreens} from '@typings/screens/navigation';
@@ -56,6 +57,28 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => ({
         height: 1,
         backgroundColor: changeOpacity(theme.centerChannelColor, 0.08),
         marginVertical: 8,
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+    },
+    iconContainer: {
+        width: 32,
+        alignItems: 'center',
+        marginRight: 12,
+    },
+    rowBody: {
+        flex: 1,
+        flexDirection: 'column',
+    },
+    rowLabel: {
+        fontSize: 16,
+        color: theme.centerChannelColor,
+    },
+    rowValue: {
+        fontSize: 14,
+        color: changeOpacity(theme.centerChannelColor, 0.64),
     },
 }));
 
@@ -127,6 +150,11 @@ const ChannelInfo = ({
                 />
                 <Extra channelId={channelId}/>
                 <View style={styles.separator}/>
+                <PlaybookRuns
+                    serverUrl={serverUrl}
+                    channelId={channelId}
+                />
+                <View style={styles.separator}/>
                 <Options
                     channelId={channelId}
                     type={type}
@@ -137,10 +165,10 @@ const ChannelInfo = ({
                 />
                 <View style={styles.separator}/>
                 {convertGMOptionAvailable &&
-                <>
-                    <ConvertToChannelLabel channelId={channelId}/>
-                    <View style={styles.separator}/>
-                </>
+                    <>
+                        <ConvertToChannelLabel channelId={channelId}/>
+                        <View style={styles.separator}/>
+                    </>
                 }
                 {canEnableDisableCalls &&
                     <>

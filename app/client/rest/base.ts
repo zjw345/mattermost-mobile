@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {Calls} from '@constants';
+import {Calls, Playbooks} from '@constants';
 
 import * as ClientConstants from './constants';
 import ClientTracking from './tracking';
@@ -193,6 +193,10 @@ export default class ClientBase extends ClientTracking {
 
     getCallsRoute() {
         return this.getPluginRoute(Calls.PluginId);
+    }
+
+    getPlaybooksRoute() {
+        return `${this.getPluginRoute(Playbooks.PluginId)}/api/v0`;
     }
 
     getPerformanceRoute() {

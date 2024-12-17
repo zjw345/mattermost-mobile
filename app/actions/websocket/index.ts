@@ -14,10 +14,11 @@ import {fetchPostsForChannel, fetchPostThread} from '@actions/remote/post';
 import {openAllUnreadChannels} from '@actions/remote/preference';
 import {autoUpdateTimezone} from '@actions/remote/user';
 import {loadConfigAndCalls} from '@calls/actions/calls';
-import {isSupportedServerCalls} from '@calls/utils';
+import {isSupportedServerCalls, isSupportedServerPlaybooks} from '@calls/utils';
 import {Screens} from '@constants';
 import DatabaseManager from '@database/manager';
 import AppsManager from '@managers/apps_manager';
+import {loadPlaybookRunsForTeamAndUser} from '@playbooks/actions/playbooks';
 import {getActiveServerUrl} from '@queries/app/servers';
 import {getLastPostInThread} from '@queries/servers/post';
 import {
@@ -100,6 +101,10 @@ async function doReconnect(serverUrl: string, groupLabel?: string) {
 
     if (isSupportedServerCalls(config?.Version)) {
         loadConfigAndCalls(serverUrl, currentUserId, groupLabel);
+    }
+
+    if (isSupportedServerPlaybooks(config?.Version)) {
+        loadPlaybookRunsForTeamAndUser(serverUrl, currentTeamId, currentUserId);
     }
 
     await deferredAppEntryActions(serverUrl, lastFullSync, currentUserId, currentUserLocale, prefData.preferences, config, license, teamData, chData, initialTeamId, undefined, groupLabel);
