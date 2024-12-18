@@ -1,7 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React from 'react';
+import {useDatabase} from '@nozbe/watermelondb/react';
+import React, {useEffect, useState} from 'react';
 import {
     SafeAreaView,
     View,
@@ -16,9 +17,11 @@ import Markdown from '@components/markdown';
 import CompassIcon from '@components/compass_icon';
 import {useTheme} from '@context/theme';
 import {makeStyleSheetFromTheme} from '@utils/theme';
+import {queryUsersById} from '@queries/servers/user';
 import {typography} from '@utils/typography';
 
 import type {PlaybookRun} from '../../client/rest';
+import type UserModel from '@typings/database/models/servers/user';
 
 type Props = {
     run: PlaybookRun;
@@ -77,8 +80,23 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
 });
 
 const ChannelRunDetails = ({run}: Props) => {
+    const database = useDatabase();
     const theme = useTheme();
     const style = getStyleSheet(theme);
+    const [users, setUsers] = useState<Record<string, UserModel>>({});
+
+    useEffect(() => {
+        const fetch = async () => {
+            const localUsers = await queryUsersById(database, [run.owner_user_id, ...run.participant_ids]).fetch();
+            const usersMap = localUsers.reduce((map: Record<string, UserModel>, user: UserModel) => {
+                map[user.id] = user;
+                return map;
+            }, {} as Record<string, UserModel>);
+
+            setUsers(usersMap);
+        };
+        fetch();
+    }, [database, run.owner_user_id, run.participant_ids]);
 
     return (
         <SafeAreaView style={style.container}>
@@ -102,13 +120,13 @@ const ChannelRunDetails = ({run}: Props) => {
                 <View style={style.horizontalSection}>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Owner'}</Text>
-                        <Owner owner={run.owner}/>
+                        <Owner owner={users[run.owner_user_id]}/>
                     </View>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Participants'}</Text>
                         <Participants 
-                            participants={run.participants}
-                            ownerId={run.owner.id}
+                            participants={Object.values(users)}
+                            ownerId={run.owner_user_id}
                         />
                     </View>
                 </View>
