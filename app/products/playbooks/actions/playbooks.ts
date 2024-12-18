@@ -31,7 +31,6 @@ export const checkIsPlaybooksPluginEnabled = async (serverUrl: string) => {
 };
 
 export const loadPlaybookRunsForTeamAndUser = async (serverUrl: string, teamId: string, userId: string) => {
-    // let resp: CallChannelState[] = [];
     try {
         const client = NetworkManager.getClient(serverUrl);
 
@@ -42,27 +41,6 @@ export const loadPlaybookRunsForTeamAndUser = async (serverUrl: string, teamId: 
         await forceLogoutIfNecessary(serverUrl, error);
         return {error};
     }
-
-    // const playbooksResults: Dictionary<Call> = {};
-    // const enabledChannels: Dictionary<boolean> = {};
-    // const ids = new Set<string>();
-    //
-    // for (const channel of resp) {
-    //     if (channel.call) {
-    //         playbooksResults[channel.channel_id] = createCallAndAddToIds(channel.channel_id, convertOldCallToNew(channel.call), ids);
-    //     }
-    //
-    //     if (typeof channel.enabled !== 'undefined') {
-    //         enabledChannels[channel.channel_id] = channel.enabled;
-    //     }
-    // }
-    //
-    // // Batch load user models async because we'll need them later
-    // if (ids.size > 0) {
-    //     fetchUsersByIds(serverUrl, Array.from(ids));
-    // }
-    //
-    // setPlaybooks(serverUrl, userId, playbooksResults, enabledChannels);
 
     return {data: {}};
 };

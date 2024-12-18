@@ -57,19 +57,19 @@ const ChannelRunDetails = ({run}: Props) => {
         <SafeAreaView style={style.container}>
             <View style={style.content}>
                 <Text style={style.name}>{run.name}</Text>
-                
+
                 <View style={style.section}>
-                    <Text style={style.sectionTitle}>Summary</Text>
+                    <Text style={style.sectionTitle}>{'Summary'}</Text>
                     <Text style={style.text}>{run.summary || 'No summary provided'}</Text>
                 </View>
 
                 <View style={style.section}>
-                    <Text style={style.sectionTitle}>Status</Text>
+                    <Text style={style.sectionTitle}>{'Status'}</Text>
                     <Text style={style.text}>{run.current_status}</Text>
                 </View>
 
                 <View style={style.section}>
-                    <Text style={style.sectionTitle}>Created</Text>
+                    <Text style={style.sectionTitle}>{'Created'}</Text>
                     <Text style={style.text}>
                         {new Date(run.create_at).toLocaleDateString()}
                     </Text>

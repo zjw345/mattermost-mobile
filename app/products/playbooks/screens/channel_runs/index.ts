@@ -5,5 +5,4 @@ import {withDatabase} from '@nozbe/watermelondb/react';
 
 import ChannelRuns from './channel_runs';
 
-const ChannelRunsScreen = withDatabase(ChannelRuns);
-export default ChannelRunsScreen;
+export default withDatabase(ChannelRuns);
