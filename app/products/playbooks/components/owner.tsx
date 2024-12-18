@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, StyleProp, ViewStyle} from 'react-native';
 
 import ProfilePicture from '@components/profile_picture';
 import {useTheme} from '@context/theme';
@@ -12,6 +12,7 @@ import type UserModel from '@typings/database/models/servers/user';
 
 type Props = {
     owner: UserModel;
+    style?: StyleProp<ViewStyle>;
 }
 
 const getStyleSheet = makeStyleSheetFromTheme((theme) => {
@@ -39,12 +40,12 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
     });
 });
 
-const Owner = ({owner}: Props) => {
+const Owner = ({owner, style}: Props) => {
     const theme = useTheme();
     const style = getStyleSheet(theme);
 
     return (
-        <View style={style.ownerContainer}>
+        <View style={[style.ownerContainer, style]}>
             <ProfilePicture
                 size={20}
                 author={owner}
