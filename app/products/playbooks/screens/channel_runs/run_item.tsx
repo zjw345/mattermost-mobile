@@ -6,10 +6,10 @@ import React, {useEffect, useState} from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import FormattedText from '@components/formatted_text';
-import ProfilePicture from '@components/profile_picture';
 import {Screens} from '@constants';
 import {useTheme} from '@context/theme';
 import Owner from '@playbooks/components/owner';
+import Participants from '@playbooks/components/participants';
 import {queryUsersById} from '@queries/servers/user';
 import {dismissAllModalsAndPopToScreen} from '@screens/navigation';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
@@ -58,15 +58,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         },
         details: {
         },
-        participantsContainer: {
-            flexDirection: 'row',
-            marginLeft: 8,
-        },
-        participant: {
-            marginLeft: -8,
-        },
-        participantProfilePictureContainer: {
-        },
     });
 });
 
@@ -89,7 +80,6 @@ const RunItem = ({run}: Props) => {
         fetch();
     }, [database, run.owner_user_id, run.participant_ids, setUsers]);
 
-    const participantIdsLessOwner = run.participant_ids.filter((id) => id !== run.owner_user_id);
 
     const onPress = () => {
         dismissAllModalsAndPopToScreen(
@@ -109,22 +99,10 @@ const RunItem = ({run}: Props) => {
                 </View>
                 <View style={style.users}>
                     <Owner owner={users[run.owner_user_id]}/>
-                    <View style={style.participantsContainer}>
-                        {participantIdsLessOwner.map((userId) => (
-                            <View
-                                key={userId}
-                                style={style.participant}
-                            >
-                                <ProfilePicture
-                                    size={24}
-                                    author={users[userId]}
-                                    showStatus={false}
-                                    containerStyle={style.participantProfilePictureContainer}
-                                    imageStyle={{borderColor: theme.centerChannelBg, borderWidth: 1.5}}
-                                />
-                            </View>
-                        ))}
-                    </View>
+                    <Participants
+                        participants={Object.values(users)}
+                        ownerId={run.owner_user_id}
+                    />
                 </View>
                 <View style={style.details}>
                     <FormattedText
