@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 
 import Markdown from '@components/markdown';
-
 import {useTheme} from '@context/theme';
 import {makeStyleSheetFromTheme} from '@utils/theme';
 import {typography} from '@utils/typography';
@@ -61,7 +60,6 @@ const ChannelRunDetails = ({run}: Props) => {
                 <Text style={style.name}>{run.name}</Text>
 
                 <View style={style.section}>
-                    <Text style={style.sectionTitle}>{'Summary'}</Text>
                     {run.summary ? (
                         <Markdown
                             value={run.summary}
@@ -72,18 +70,6 @@ const ChannelRunDetails = ({run}: Props) => {
                     ) : (
                         <Text style={style.text}>{'No summary provided'}</Text>
                     )}
-                </View>
-
-                <View style={style.section}>
-                    <Text style={style.sectionTitle}>{'Status'}</Text>
-                    <Text style={style.text}>{run.current_status}</Text>
-                </View>
-
-                <View style={style.section}>
-                    <Text style={style.sectionTitle}>{'Created'}</Text>
-                    <Text style={style.text}>
-                        {new Date(run.create_at).toLocaleDateString()}
-                    </Text>
                 </View>
             </View>
         </SafeAreaView>
