@@ -9,6 +9,7 @@ import FormattedText from '@components/formatted_text';
 import ProfilePicture from '@components/profile_picture';
 import {Screens} from '@constants';
 import {useTheme} from '@context/theme';
+import Owner from '@playbooks/components/owner';
 import {queryUsersById} from '@queries/servers/user';
 import {dismissAllModalsAndPopToScreen} from '@screens/navigation';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
@@ -56,24 +57,6 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             marginBottom: 8,
         },
         details: {
-        },
-        ownerContainer: {
-            backgroundColor: changeOpacity(theme.centerChannelColor, 0.08),
-            borderRadius: 20,
-            paddingVertical: 4,
-            paddingHorizontal: 12,
-            flexDirection: 'row',
-            alignItems: 'center',
-            height: 24,
-        },
-        ownerProfilePictureContainer: {
-            marginLeft: -10,
-        },
-        ownerName: {
-            color: theme.centerChannelColor,
-            fontSize: 16,
-            marginLeft: 8,
-            lineHeight: 17,
         },
         participantsContainer: {
             flexDirection: 'row',
@@ -125,17 +108,7 @@ const RunItem = ({run}: Props) => {
                     <Text style={style.name}>{run.name}</Text>
                 </View>
                 <View style={style.users}>
-                    <View style={style.ownerContainer}>
-                        <ProfilePicture
-                            size={20}
-                            author={users[run.owner_user_id]}
-                            showStatus={false}
-                            containerStyle={style.ownerProfilePictureContainer}
-                        />
-                        <Text style={style.ownerName}>
-                            {users[run.owner_user_id]?.username || 'Unknown User'}
-                        </Text>
-                    </View>
+                    <Owner owner={users[run.owner_user_id]}/>
                     <View style={style.participantsContainer}>
                         {participantIdsLessOwner.map((userId) => (
                             <View
