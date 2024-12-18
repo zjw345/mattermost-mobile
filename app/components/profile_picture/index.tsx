@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, type CSSProperties} from 'react';
 import {type StyleProp, View, type ViewStyle} from 'react-native';
 
 import {fetchStatusInBatch} from '@actions/remote/user';
@@ -24,6 +24,7 @@ type ProfilePictureProps = {
     statusSize?: number;
     containerStyle?: StyleProp<ViewStyle>;
     statusStyle?: StyleProp<ViewStyle>;
+    imageStyle?: CSSProperties;
     testID?: string;
     source?: ImageSource | string;
     url?: string;
@@ -64,6 +65,7 @@ const ProfilePicture = ({
     statusSize = 14,
     containerStyle,
     statusStyle,
+    imageStyle,
     testID,
     source,
     url,
@@ -98,14 +100,15 @@ const ProfilePicture = ({
                 size={size}
                 source={source}
                 url={serverUrl}
+                imageStyle={imageStyle}
             />
             {showStatus && !isBot &&
-            <Status
-                author={author}
-                statusSize={statusSize}
-                statusStyle={statusStyle}
-                theme={theme}
-            />
+                <Status
+                    author={author}
+                    statusSize={statusSize}
+                    statusStyle={statusStyle}
+                    theme={theme}
+                />
             }
         </View>
     );

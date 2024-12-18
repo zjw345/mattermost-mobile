@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import {Image as ExpoImage, type ImageSource} from 'expo-image';
-import React, {useMemo} from 'react';
+import React, {useMemo, type CSSProperties} from 'react';
 import Animated from 'react-native-reanimated';
 
 import {buildAbsoluteUrl} from '@actions/remote/file';
@@ -23,6 +23,7 @@ type Props = {
     size: number;
     source?: ImageSource | string;
     url?: string;
+    imageStyle?: CSSProperties;
 };
 
 const AnimatedImage = Animated.createAnimatedComponent(ExpoImage);
@@ -35,7 +36,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme: Theme) => {
     };
 });
 
-const Image = ({author, forwardRef, iconSize, size, source, url}: Props) => {
+const Image = ({author, forwardRef, iconSize, size, source, url, imageStyle = {}}: Props) => {
     const theme = useTheme();
     let serverUrl = useServerUrl();
     serverUrl = url || serverUrl;
@@ -47,7 +48,8 @@ const Image = ({author, forwardRef, iconSize, size, source, url}: Props) => {
         backgroundColor: theme.centerChannelBg,
         height: size,
         width: size,
-    }), [size]);
+        ...imageStyle,
+    }), [size, imageStyle, theme.centerChannelBg]);
 
     const imgSource = useMemo(() => {
         if (!author || typeof source === 'string') {
