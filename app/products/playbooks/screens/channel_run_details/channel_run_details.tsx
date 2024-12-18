@@ -100,27 +100,11 @@ const ChannelRunDetails = ({run}: Props) => {
                 <View style={style.horizontalSection}>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Owner'}</Text>
-                        <View style={style.ownerSection}>
-                            <Image
-                                source={{uri: run.owner_user_info?.avatar_url}}
-                                style={style.avatar}
-                            />
-                            <Text style={[style.text, {marginLeft: 8}]}>
-                                {run.owner_user_info?.username || 'Unknown'}
-                            </Text>
-                        </View>
+                        <!-- TODO: Use Owner component -->
                     </View>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Participants'}</Text>
-                        <View style={style.participantsSection}>
-                            {run.participant_user_infos?.map((participant) => (
-                                <Image
-                                    key={participant.user_id}
-                                    source={{uri: participant.avatar_url}}
-                                    style={style.avatar}
-                                />
-                            ))}
-                        </View>
+                        <!-- TODO: Use Participants component -->
                     </View>
                 </View>
             </View>
