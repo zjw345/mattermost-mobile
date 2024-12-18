@@ -98,7 +98,10 @@ const RunItem = ({run}: Props) => {
                     <Text style={style.name}>{run.name}</Text>
                 </View>
                 <View style={style.users}>
-                    <Owner owner={users[run.owner_user_id]}/>
+                    <Owner 
+                        owner={users[run.owner_user_id]}
+                        style={{marginRight: 4}}
+                    />
                     <Participants
                         participants={Object.values(users)}
                         ownerId={run.owner_user_id}
