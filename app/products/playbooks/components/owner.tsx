@@ -24,6 +24,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             flexDirection: 'row',
             alignItems: 'center',
             height: 24,
+            alignSelf: 'flex-start',
         },
         ownerProfilePictureContainer: {
             marginLeft: -10,
@@ -33,6 +34,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             fontSize: 16,
             marginLeft: 8,
             lineHeight: 17,
+            flexShrink: 1,
         },
     });
 });
