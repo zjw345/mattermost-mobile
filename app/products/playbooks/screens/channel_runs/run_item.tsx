@@ -7,7 +7,9 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import FormattedText from '@components/formatted_text';
 import ProfilePicture from '@components/profile_picture';
+import {Screens} from '@constants';
 import {useTheme} from '@context/theme';
+import {dismissAllModalsAndPopToScreen} from '@screens/navigation';
 import {queryUsersById} from '@queries/servers/user';
 import {changeOpacity, makeStyleSheetFromTheme} from '@utils/theme';
 import {typography} from '@utils/typography';
@@ -106,7 +108,13 @@ const RunItem = ({run}: Props) => {
 
     const participantIdsLessOwner = run.participant_ids.filter((id) => id !== run.owner_user_id);
 
-    const onPress = () => null;
+    const onPress = () => {
+        dismissAllModalsAndPopToScreen(
+            Screens.PLAYBOOKS_CHANNEL_RUN_DETAILS,
+            'Run Details',
+            {run},
+        );
+    };
 
     return (
         <Pressable
