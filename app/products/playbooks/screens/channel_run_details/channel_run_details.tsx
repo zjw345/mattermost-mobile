@@ -3,6 +3,7 @@
 
 import React from 'react';
 import {
+    Image,
     SafeAreaView,
     View,
     StyleSheet,
@@ -10,6 +11,7 @@ import {
 } from 'react-native';
 
 import Markdown from '@components/markdown';
+import CompassIcon from '@components/compass_icon';
 import {useTheme} from '@context/theme';
 import {makeStyleSheetFromTheme} from '@utils/theme';
 import {typography} from '@utils/typography';
@@ -47,6 +49,22 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             ...typography('Body', 200),
             color: theme.centerChannelColor,
         },
+        avatar: {
+            width: 32,
+            height: 32,
+            borderRadius: 16,
+        },
+        ownerSection: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginBottom: 4,
+        },
+        participantsSection: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            gap: 8,
+        },
     });
 });
 
@@ -60,6 +78,7 @@ const ChannelRunDetails = ({run}: Props) => {
                 <Text style={style.name}>{run.name}</Text>
 
                 <View style={style.section}>
+                    <Text style={style.sectionTitle}>{'Summary'}</Text>
                     {run.summary ? (
                         <Markdown
                             value={run.summary}
@@ -70,6 +89,32 @@ const ChannelRunDetails = ({run}: Props) => {
                     ) : (
                         <Text style={style.text}>{'No summary provided'}</Text>
                     )}
+                </View>
+
+                <View style={style.section}>
+                    <Text style={style.sectionTitle}>{'Owner'}</Text>
+                    <View style={style.ownerSection}>
+                        <Image
+                            source={{uri: run.owner_user_info?.avatar_url}}
+                            style={style.avatar}
+                        />
+                        <Text style={[style.text, {marginLeft: 8}]}>
+                            {run.owner_user_info?.username || 'Unknown'}
+                        </Text>
+                    </View>
+                </View>
+
+                <View style={style.section}>
+                    <Text style={style.sectionTitle}>{'Participants'}</Text>
+                    <View style={style.participantsSection}>
+                        {run.participant_user_infos?.map((participant) => (
+                            <Image
+                                key={participant.user_id}
+                                source={{uri: participant.avatar_url}}
+                                style={style.avatar}
+                            />
+                        ))}
+                    </View>
                 </View>
             </View>
         </SafeAreaView>
