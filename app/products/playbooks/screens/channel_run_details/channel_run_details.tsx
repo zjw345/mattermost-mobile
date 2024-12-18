@@ -9,6 +9,8 @@ import {
     Text,
 } from 'react-native';
 
+import Markdown from '@components/markdown';
+
 import {useTheme} from '@context/theme';
 import {makeStyleSheetFromTheme} from '@utils/theme';
 import {typography} from '@utils/typography';
@@ -60,7 +62,16 @@ const ChannelRunDetails = ({run}: Props) => {
 
                 <View style={style.section}>
                     <Text style={style.sectionTitle}>{'Summary'}</Text>
-                    <Text style={style.text}>{run.summary || 'No summary provided'}</Text>
+                    {run.summary ? (
+                        <Markdown
+                            value={run.summary}
+                            baseTextStyle={style.text}
+                            location='channel_run_details'
+                            theme={theme}
+                        />
+                    ) : (
+                        <Text style={style.text}>{'No summary provided'}</Text>
+                    )}
                 </View>
 
                 <View style={style.section}>
