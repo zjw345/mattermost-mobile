@@ -3,7 +3,6 @@
 
 import {withDatabase} from '@nozbe/watermelondb/react';
 
-import ChannelRuns from './channel_runs';
+import ChannelRunDetails from './channel_run_details';
 
-const ChannelRunsScreen = withDatabase(ChannelRuns);
-export default ChannelRunsScreen;
+export default withDatabase(ChannelRunDetails);

@@ -286,6 +286,9 @@ Navigation.setLazyComponentRegistrator((screenName) => {
         case Screens.PLAYBOOKS_CHANNEL_RUNS:
             screen = withServerDatabase(require('@playbooks/screens/channel_runs').default);
             break;
+        case Screens.PLAYBOOKS_CHANNEL_RUN_DETAILS:
+            screen = withServerDatabase(require('@playbooks/screens/channel_run_details').default);
+            break;
     }
 
     if (screen) {
