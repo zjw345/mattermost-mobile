@@ -10,15 +10,15 @@ import {
     Text,
 } from 'react-native';
 
+import CompassIcon from '@components/compass_icon';
+import Markdown from '@components/markdown';
+import {useTheme} from '@context/theme';
+import {queryUsersById} from '@queries/servers/user';
+import {makeStyleSheetFromTheme} from '@utils/theme';
+import {typography} from '@utils/typography';
+
 import Owner from '../../components/owner';
 import Participants from '../../components/participants';
-
-import Markdown from '@components/markdown';
-import CompassIcon from '@components/compass_icon';
-import {useTheme} from '@context/theme';
-import {makeStyleSheetFromTheme} from '@utils/theme';
-import {queryUsersById} from '@queries/servers/user';
-import {typography} from '@utils/typography';
 
 import type {PlaybookRun} from '../../client/rest';
 import type UserModel from '@typings/database/models/servers/user';
@@ -65,6 +65,7 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
         },
         halfSection: {
             flex: 1,
+            marginRight: 36,
         },
         ownerSection: {
             flexDirection: 'row',
@@ -120,11 +121,11 @@ const ChannelRunDetails = ({run}: Props) => {
                 <View style={style.horizontalSection}>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Owner'}</Text>
-                        <Owner owner={users[run.owner_user_id]}/>
+                        <Owner owner={users[run.owner_user_id]} />
                     </View>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Participants'}</Text>
-                        <Participants 
+                        <Participants
                             participants={Object.values(users)}
                             ownerId={run.owner_user_id}
                         />
