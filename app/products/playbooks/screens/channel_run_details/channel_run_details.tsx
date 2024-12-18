@@ -3,12 +3,14 @@
 
 import React from 'react';
 import {
-    Image,
     SafeAreaView,
     View,
     StyleSheet,
     Text,
 } from 'react-native';
+
+import Owner from '../../components/owner';
+import Participants from '../../components/participants';
 
 import Markdown from '@components/markdown';
 import CompassIcon from '@components/compass_icon';
@@ -100,11 +102,14 @@ const ChannelRunDetails = ({run}: Props) => {
                 <View style={style.horizontalSection}>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Owner'}</Text>
-                        <!-- TODO: Use Owner component -->
+                        <Owner owner={run.owner}/>
                     </View>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Participants'}</Text>
-                        <!-- TODO: Use Participants component -->
+                        <Participants 
+                            participants={run.participants}
+                            ownerId={run.owner.id}
+                        />
                     </View>
                 </View>
             </View>
