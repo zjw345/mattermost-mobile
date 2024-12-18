@@ -6,6 +6,7 @@ import {StyleSheet, View} from 'react-native';
 
 import ProfilePicture from '@components/profile_picture';
 import {useTheme} from '@context/theme';
+import {makeStyleSheetFromTheme} from '@utils/theme';
 
 import type UserModel from '@typings/database/models/servers/user';
 
