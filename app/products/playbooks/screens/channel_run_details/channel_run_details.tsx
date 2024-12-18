@@ -54,10 +54,16 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             height: 32,
             borderRadius: 16,
         },
+        horizontalSection: {
+            flexDirection: 'row',
+            marginBottom: 24,
+        },
+        halfSection: {
+            flex: 1,
+        },
         ownerSection: {
             flexDirection: 'row',
             alignItems: 'center',
-            marginBottom: 4,
         },
         participantsSection: {
             flexDirection: 'row',
@@ -91,29 +97,30 @@ const ChannelRunDetails = ({run}: Props) => {
                     )}
                 </View>
 
-                <View style={style.section}>
-                    <Text style={style.sectionTitle}>{'Owner'}</Text>
-                    <View style={style.ownerSection}>
-                        <Image
-                            source={{uri: run.owner_user_info?.avatar_url}}
-                            style={style.avatar}
-                        />
-                        <Text style={[style.text, {marginLeft: 8}]}>
-                            {run.owner_user_info?.username || 'Unknown'}
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={style.section}>
-                    <Text style={style.sectionTitle}>{'Participants'}</Text>
-                    <View style={style.participantsSection}>
-                        {run.participant_user_infos?.map((participant) => (
+                <View style={style.horizontalSection}>
+                    <View style={style.halfSection}>
+                        <Text style={style.sectionTitle}>{'Owner'}</Text>
+                        <View style={style.ownerSection}>
                             <Image
-                                key={participant.user_id}
-                                source={{uri: participant.avatar_url}}
+                                source={{uri: run.owner_user_info?.avatar_url}}
                                 style={style.avatar}
                             />
-                        ))}
+                            <Text style={[style.text, {marginLeft: 8}]}>
+                                {run.owner_user_info?.username || 'Unknown'}
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={style.halfSection}>
+                        <Text style={style.sectionTitle}>{'Participants'}</Text>
+                        <View style={style.participantsSection}>
+                            {run.participant_user_infos?.map((participant) => (
+                                <Image
+                                    key={participant.user_id}
+                                    source={{uri: participant.avatar_url}}
+                                    style={style.avatar}
+                                />
+                            ))}
+                        </View>
                     </View>
                 </View>
             </View>
