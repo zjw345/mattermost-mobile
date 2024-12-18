@@ -30,9 +30,9 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             padding: 20,
         },
         name: {
-            ...typography('Heading', 600),
+            ...typography('Heading', 400),
             color: theme.centerChannelColor,
-            marginBottom: 16,
+            marginBottom: 10,
         },
         section: {
             marginBottom: 24,
