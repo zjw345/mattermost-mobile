@@ -16,9 +16,9 @@ import {queryUsersById} from '@queries/servers/user';
 import {makeStyleSheetFromTheme} from '@utils/theme';
 import {typography} from '@utils/typography';
 
+import ChecklistList from '../../components/checklist/checklist_list';
 import Owner from '../../components/owner';
 import Participants from '../../components/participants';
-import ChecklistList from '../../components/checklist/checklist_list';
 
 import type {PlaybookRun} from '../../client/rest';
 import type UserModel from '@typings/database/models/servers/user';
@@ -130,7 +130,7 @@ const ChannelRunDetails = ({run}: Props) => {
                 <View style={style.horizontalSection}>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Owner'}</Text>
-                        <Owner owner={users[run.owner_user_id]}/>
+                        <Owner owner={users[run.owner_user_id]} />
                     </View>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Participants'}</Text>

@@ -1,8 +1,10 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {useTheme} from '@react-navigation/native';
-
 import {ChecklistItem} from 'types/playbook';
+
 import Icon from '@components/icon';
 
 interface Props {

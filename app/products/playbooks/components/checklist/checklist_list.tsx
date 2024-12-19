@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
 import {useTheme} from '@react-navigation/native';
+import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
+import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
-
-import {PlaybookRun, PlaybookRunStatus} from 'types/playbook_run';
-import {Checklist} from 'types/playbook';
 import {playbookRunUpdated} from 'src/actions';
 import {clientAddChecklist, clientMoveChecklist, clientMoveChecklistItem} from 'src/client';
+import {Checklist} from 'types/playbook';
+import {PlaybookRun, PlaybookRunStatus} from 'types/playbook_run';
 
 import CollapsibleChecklist from './collapsible_checklist';
 
@@ -71,7 +72,7 @@ const ChecklistList = ({
         }
 
         const newChecklists = [...checklists];
-        
+
         if (srcChecklistIdx === dstChecklistIdx) {
             const newChecklistItems = [...checklists[srcChecklistIdx].items];
             const [moved] = newChecklistItems.splice(srcIdx, 1);
