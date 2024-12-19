@@ -9,6 +9,7 @@ import {
     StyleSheet,
     Text,
     ScrollView,
+    TouchableOpacity,
 } from 'react-native';
 
 import Markdown from '@components/markdown';
@@ -17,11 +18,11 @@ import {queryUsersById} from '@queries/servers/user';
 import {makeStyleSheetFromTheme} from '@utils/theme';
 import {typography} from '@utils/typography';
 
+import {PlaybookRunStatus, type PlaybookRun} from '../../client/rest';
 import ChecklistList from '../../components/checklist/checklist_list';
 import Owner from '../../components/owner';
 import Participants from '../../components/participants';
 
-import type {PlaybookRun} from '../../client/rest';
 import type UserModel from '@typings/database/models/servers/user';
 
 type Props = {
@@ -78,6 +79,18 @@ const getStyleSheet = makeStyleSheetFromTheme((theme) => {
             flexWrap: 'wrap',
             gap: 8,
         },
+        finishButton: {
+            backgroundColor: theme.buttonBg,
+            padding: 15,
+            borderRadius: 4,
+            alignItems: 'center',
+            marginTop: 20,
+            marginBottom: 20,
+        },
+        finishButtonText: {
+            color: theme.buttonColor,
+            ...typography('Body', 200, 'SemiBold'),
+        },
     });
 });
 
@@ -122,7 +135,7 @@ const ChannelRunDetails = ({run}: Props) => {
                 <View style={style.horizontalSection}>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Owner'}</Text>
-                        <Owner owner={users[run.owner_user_id]}/>
+                        <Owner owner={users[run.owner_user_id]} />
                     </View>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Participants'}</Text>
@@ -135,8 +148,20 @@ const ChannelRunDetails = ({run}: Props) => {
 
                 <View style={style.section}>
                     <Text style={style.sectionTitle}>{'Tasks'}</Text>
-                    <ChecklistList playbookRun={run}/>
+                    <ChecklistList playbookRun={run} />
                 </View>
+
+                {run.current_status === PlaybookRunStatus.InProgress && (
+                    <TouchableOpacity
+                        style={style.finishButton}
+                        onPress={() => {
+                            // TODO: Implement finish run functionality
+                            console.log('Finish run pressed');
+                        }}
+                    >
+                        <Text style={style.finishButtonText}>{'Finish Run'}</Text>
+                    </TouchableOpacity>
+                )}
             </ScrollView>
         </SafeAreaView>
     );
