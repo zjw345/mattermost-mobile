@@ -1,113 +1,19 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
-import {useTheme} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {useIntl} from 'react-intl';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {playbookRunUpdated} from 'src/actions';
-import {clientAddChecklist, clientMoveChecklist, clientMoveChecklistItem} from 'src/client';
-import {Checklist} from 'types/playbook';
-import {PlaybookRun, PlaybookRunStatus} from 'types/playbook_run';
+import {PlaybookRun} from 'types/playbook_run';
 
 import CollapsibleChecklist from './collapsible_checklist';
 
 interface Props {
-    playbookRun?: PlaybookRun;
-    isReadOnly: boolean;
+    playbookRun: PlaybookRun;
     checklistsCollapseState: Record<number, boolean>;
     onChecklistCollapsedStateChange: (checklistIndex: number, state: boolean) => void;
-    onEveryChecklistCollapsedStateChange: (state: Record<number, boolean>) => void;
 }
 
-const ChecklistList = ({
-    playbookRun,
-    isReadOnly,
-    checklistsCollapseState,
-    onChecklistCollapsedStateChange,
-    onEveryChecklistCollapsedStateChange,
-}: Props) => {
-    const dispatch = useDispatch();
-    const {formatMessage} = useIntl();
-    const [addingChecklist, setAddingChecklist] = useState(false);
-    const [newChecklistName, setNewChecklistName] = useState('');
-
-    const checklists = playbookRun?.checklists || [];
-    const finished = playbookRun?.current_status === PlaybookRunStatus.Finished;
-    const readOnly = finished || isReadOnly;
-
-    const onMoveChecklist = (srcIdx: number, dstIdx: number) => {
-        if (!playbookRun) {
-            return;
-        }
-
-        const newChecklists = [...checklists];
-        const [moved] = newChecklists.splice(srcIdx, 1);
-        newChecklists.splice(dstIdx, 0, moved);
-
-        const newState = {...checklistsCollapseState};
-        if (srcIdx < dstIdx) {
-            for (let i = srcIdx; i < dstIdx; i++) {
-                newState[i] = checklistsCollapseState[i + 1];
-            }
-        } else {
-            for (let i = dstIdx + 1; i <= srcIdx; i++) {
-                newState[i] = checklistsCollapseState[i - 1];
-            }
-        }
-        newState[dstIdx] = checklistsCollapseState[srcIdx];
-
-        onEveryChecklistCollapsedStateChange(newState);
-        clientMoveChecklist(playbookRun.id, srcIdx, dstIdx);
-
-        dispatch(playbookRunUpdated({
-            ...playbookRun,
-            checklists: newChecklists,
-        }));
-    };
-
-    const onMoveChecklistItem = (srcChecklistIdx: number, srcIdx: number, dstChecklistIdx: number, dstIdx: number) => {
-        if (!playbookRun) {
-            return;
-        }
-
-        const newChecklists = [...checklists];
-
-        if (srcChecklistIdx === dstChecklistIdx) {
-            const newChecklistItems = [...checklists[srcChecklistIdx].items];
-            const [moved] = newChecklistItems.splice(srcIdx, 1);
-            newChecklistItems.splice(dstIdx, 0, moved);
-            newChecklists[srcChecklistIdx] = {
-                ...newChecklists[srcChecklistIdx],
-                items: newChecklistItems,
-            };
-        } else {
-            const srcChecklist = checklists[srcChecklistIdx];
-            const dstChecklist = checklists[dstChecklistIdx];
-
-            const newSrcChecklistItems = [...srcChecklist.items];
-            const [moved] = newSrcChecklistItems.splice(srcIdx, 1);
-
-            const newDstChecklistItems = [...dstChecklist.items];
-            newDstChecklistItems.splice(dstIdx, 0, moved);
-
-            newChecklists[srcChecklistIdx] = {
-                ...srcChecklist,
-                items: newSrcChecklistItems,
-            };
-            newChecklists[dstChecklistIdx] = {
-                ...dstChecklist,
-                items: newDstChecklistItems,
-            };
-        }
-
-        clientMoveChecklistItem(playbookRun.id, srcChecklistIdx, srcIdx, dstChecklistIdx, dstIdx);
-
-        dispatch(playbookRunUpdated({
-            ...playbookRun,
-            checklists: newChecklists,
-        }));
-    };
+const ChecklistList = ({playbookRun, checklistsCollapseState, onChecklistCollapsedStateChange}: Props) => {
+    const checklists = playbookRun.checklists || [];
 
     return (
         <View style={styles.container}>

@@ -13,8 +13,6 @@ interface Props {
     index: number;
     collapsed: boolean;
     setCollapsed: (collapsed: boolean) => void;
-    disabled: boolean;
-    playbookRunID?: string;
 }
 
 const CollapsibleChecklist = ({
@@ -23,8 +21,6 @@ const CollapsibleChecklist = ({
     index,
     collapsed,
     setCollapsed,
-    disabled,
-    playbookRunID,
 }: Props) => {
     const theme = useTheme();
 

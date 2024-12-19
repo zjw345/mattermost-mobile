@@ -91,9 +91,6 @@ const ChannelRunDetails = ({run}: Props) => {
         setChecklistsCollapsed((prev) => ({...prev, [index]: collapsed}));
     }, []);
 
-    const handleAllChecklistsCollapse = useCallback((state: Record<number, boolean>) => {
-        setChecklistsCollapsed(state);
-    }, []);
 
     useEffect(() => {
         const fetch = async () => {
@@ -145,10 +142,8 @@ const ChannelRunDetails = ({run}: Props) => {
                     <Text style={style.sectionTitle}>{'Checklists'}</Text>
                     <ChecklistList
                         playbookRun={run}
-                        isReadOnly={true}
                         checklistsCollapseState={checklistsCollapsed}
                         onChecklistCollapsedStateChange={handleChecklistCollapse}
-                        onEveryChecklistCollapsedStateChange={handleAllChecklistsCollapse}
                     />
                 </View>
             </View>
