@@ -1,5 +1,6 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
+import {useTheme} from '@react-navigation/native';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
