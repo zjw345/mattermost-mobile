@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import {useDatabase} from '@nozbe/watermelondb/react';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
     SafeAreaView,
     View,
@@ -18,6 +18,7 @@ import {typography} from '@utils/typography';
 
 import Owner from '../../components/owner';
 import Participants from '../../components/participants';
+import ChecklistList from '../../components/checklist/checklist_list';
 
 import type {PlaybookRun} from '../../client/rest';
 import type UserModel from '@typings/database/models/servers/user';
@@ -84,6 +85,15 @@ const ChannelRunDetails = ({run}: Props) => {
     const theme = useTheme();
     const style = getStyleSheet(theme);
     const [users, setUsers] = useState<Record<string, UserModel>>({});
+    const [checklistsCollapsed, setChecklistsCollapsed] = useState<Record<number, boolean>>({});
+
+    const handleChecklistCollapse = useCallback((index: number, collapsed: boolean) => {
+        setChecklistsCollapsed((prev) => ({...prev, [index]: collapsed}));
+    }, []);
+
+    const handleAllChecklistsCollapse = useCallback((state: Record<number, boolean>) => {
+        setChecklistsCollapsed(state);
+    }, []);
 
     useEffect(() => {
         const fetch = async () => {
@@ -129,6 +139,17 @@ const ChannelRunDetails = ({run}: Props) => {
                             ownerId={run.owner_user_id}
                         />
                     </View>
+                </View>
+
+                <View style={style.section}>
+                    <Text style={style.sectionTitle}>{'Checklists'}</Text>
+                    <ChecklistList
+                        playbookRun={run}
+                        isReadOnly={true}
+                        checklistsCollapseState={checklistsCollapsed}
+                        onChecklistCollapsedStateChange={handleChecklistCollapse}
+                        onEveryChecklistCollapsedStateChange={handleAllChecklistsCollapse}
+                    />
                 </View>
             </View>
         </SafeAreaView>
