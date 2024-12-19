@@ -10,7 +10,6 @@ import {
     Text,
 } from 'react-native';
 
-import CompassIcon from '@components/compass_icon';
 import Markdown from '@components/markdown';
 import {useTheme} from '@context/theme';
 import {queryUsersById} from '@queries/servers/user';

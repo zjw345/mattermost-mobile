@@ -15,7 +15,7 @@ type Props = {
     ownerId: string;
 }
 
-const getStyleSheet = makeStyleSheetFromTheme((theme) => {
+const getStyleSheet = makeStyleSheetFromTheme(() => {
     return StyleSheet.create({
         participantsContainer: {
             flexDirection: 'row',

@@ -80,7 +80,6 @@ const RunItem = ({run}: Props) => {
         fetch();
     }, [database, run.owner_user_id, run.participant_ids, setUsers]);
 
-
     const onPress = () => {
         dismissAllModalsAndPopToScreen(
             Screens.PLAYBOOKS_CHANNEL_RUN_DETAILS,
@@ -98,9 +97,9 @@ const RunItem = ({run}: Props) => {
                     <Text style={style.name}>{run.name}</Text>
                 </View>
                 <View style={style.users}>
-                    <Owner 
+                    <Owner
                         owner={users[run.owner_user_id]}
-                        style={{marginRight: 4}}
+                        containerStyle={{marginRight: 4}}
                     />
                     <Participants
                         participants={Object.values(users)}
