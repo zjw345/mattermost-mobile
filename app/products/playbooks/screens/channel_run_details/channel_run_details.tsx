@@ -2,12 +2,13 @@
 // See LICENSE.txt for license information.
 
 import {useDatabase} from '@nozbe/watermelondb/react';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     SafeAreaView,
     View,
     StyleSheet,
     Text,
+    ScrollView,
 } from 'react-native';
 
 import Markdown from '@components/markdown';
@@ -85,12 +86,6 @@ const ChannelRunDetails = ({run}: Props) => {
     const theme = useTheme();
     const style = getStyleSheet(theme);
     const [users, setUsers] = useState<Record<string, UserModel>>({});
-    const [checklistsCollapsed, setChecklistsCollapsed] = useState<Record<number, boolean>>({});
-
-    const handleChecklistCollapse = useCallback((index: number, collapsed: boolean) => {
-        setChecklistsCollapsed((prev) => ({...prev, [index]: collapsed}));
-    }, []);
-
 
     useEffect(() => {
         const fetch = async () => {
@@ -107,7 +102,7 @@ const ChannelRunDetails = ({run}: Props) => {
 
     return (
         <SafeAreaView style={style.container}>
-            <View style={style.content}>
+            <ScrollView style={style.content}>
                 <Text style={style.name}>{run.name}</Text>
 
                 <View style={style.section}>
@@ -127,7 +122,7 @@ const ChannelRunDetails = ({run}: Props) => {
                 <View style={style.horizontalSection}>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Owner'}</Text>
-                        <Owner owner={users[run.owner_user_id]} />
+                        <Owner owner={users[run.owner_user_id]}/>
                     </View>
                     <View style={style.halfSection}>
                         <Text style={style.sectionTitle}>{'Participants'}</Text>
@@ -139,14 +134,10 @@ const ChannelRunDetails = ({run}: Props) => {
                 </View>
 
                 <View style={style.section}>
-                    <Text style={style.sectionTitle}>{'Checklists'}</Text>
-                    <ChecklistList
-                        playbookRun={run}
-                        checklistsCollapseState={checklistsCollapsed}
-                        onChecklistCollapsedStateChange={handleChecklistCollapse}
-                    />
+                    <Text style={style.sectionTitle}>{'Tasks'}</Text>
+                    <ChecklistList playbookRun={run}/>
                 </View>
-            </View>
+            </ScrollView>
         </SafeAreaView>
     );
 };

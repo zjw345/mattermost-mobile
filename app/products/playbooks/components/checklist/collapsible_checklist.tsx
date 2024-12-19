@@ -3,65 +3,46 @@
 import {useTheme} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {ChecklistItem} from 'types/playbook';
 
-import Icon from '@components/icon';
+import type {ChecklistItem} from '../../client/rest';
 
 interface Props {
     title: string;
     items: ChecklistItem[];
-    index: number;
-    collapsed: boolean;
-    setCollapsed: (collapsed: boolean) => void;
 }
 
 const CollapsibleChecklist = ({
     title,
     items,
-    index,
-    collapsed,
-    setCollapsed,
 }: Props) => {
     const theme = useTheme();
-
-    const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-    };
 
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={toggleCollapsed}
                 style={[styles.header, {borderBottomColor: theme.colors.border}]}
             >
                 <View style={styles.titleContainer}>
-                    <Icon
-                        name={collapsed ? 'chevron-right' : 'chevron-down'}
-                        size={20}
-                        color={theme.colors.text}
-                    />
                     <Text style={[styles.title, {color: theme.colors.text}]}>
                         {title}
                     </Text>
                 </View>
                 <Text style={[styles.itemCount, {color: theme.colors.text}]}>
-                    {items.length} items
+                    {items.length} {' items'}
                 </Text>
             </TouchableOpacity>
-            {!collapsed && (
-                <View style={styles.itemsContainer}>
-                    {items.map((item, itemIndex) => (
-                        <View
-                            key={`${item.title}_${itemIndex}`}
-                            style={[styles.item, {borderBottomColor: theme.colors.border}]}
-                        >
-                            <Text style={[styles.itemTitle, {color: theme.colors.text}]}>
-                                {item.title}
-                            </Text>
-                        </View>
-                    ))}
-                </View>
-            )}
+            <View style={styles.itemsContainer}>
+                {items.map((item, itemIndex) => (
+                    <View
+                        key={`${item.title}_${itemIndex}`}
+                        style={[styles.item, {borderBottomColor: theme.colors.border}]}
+                    >
+                        <Text style={[styles.itemTitle, {color: theme.colors.text}]}>
+                            {item.title}
+                        </Text>
+                    </View>
+                ))}
+            </View>
         </View>
     );
 };

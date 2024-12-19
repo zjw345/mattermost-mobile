@@ -91,6 +91,7 @@ export type StatusPost = {
 };
 
 export type Checklist = {
+    id: string;
     title: string;
     items: ChecklistItem[];
 };
