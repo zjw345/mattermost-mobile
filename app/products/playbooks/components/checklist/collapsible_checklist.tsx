@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 import {useTheme} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, CheckBox} from 'react-native';
 
 import type {ChecklistItem} from '../../client/rest';
 
@@ -37,9 +37,19 @@ const CollapsibleChecklist = ({
                         key={`${item.title}_${itemIndex}`}
                         style={[styles.item, {borderBottomColor: theme.colors.border}]}
                     >
-                        <Text style={[styles.itemTitle, {color: theme.colors.text}]}>
-                            {item.title}
-                        </Text>
+                        <View style={styles.itemRow}>
+                            <CheckBox
+                                value={item.state === 'closed'}
+                                disabled={true}
+                                tintColors={{
+                                    true: theme.colors.primary,
+                                    false: theme.colors.text,
+                                }}
+                            />
+                            <Text style={[styles.itemTitle, {color: theme.colors.text}]}>
+                                {item.title}
+                            </Text>
+                        </View>
                     </View>
                 ))}
             </View>
@@ -78,9 +88,14 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         borderBottomWidth: 1,
     },
+    itemRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 28,
+    },
     itemTitle: {
         fontSize: 14,
-        marginLeft: 28,
+        marginLeft: 8,
     },
 });
 
