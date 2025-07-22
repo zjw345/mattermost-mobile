@@ -118,6 +118,14 @@ android {
         versionName "2.26.2"
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        // START: 新增代码
+        manifestPlaceholders = [
+            JPUSH_PKGNAME : "com.mattermost.rn", // 必须与您在极光官网注册的包名一致
+            JPUSH_APPKEY  : "c20b61346ec9bdb798ced200", // 替换为您的 Appkey
+            JPUSH_CHANNEL : "developer-default" // 渠道名，可保持默认
+        ]
+        // END: 新增代码
     }
 
     signingConfigs {
@@ -195,6 +203,10 @@ repositories {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+
+    // START: 新增代码
+    implementation 'cn.jiguang.sdk:jpush:5.5.3'  // 极光推送 SDK
+    // END: 新增代码
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
