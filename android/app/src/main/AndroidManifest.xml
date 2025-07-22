@@ -116,6 +116,24 @@
                 android:exported="false"
         />
 
+
+      <!-- START: 新增 JPush 配置 -->
+      <!--
+          开发者应用的广播接收器，用于接收极光推送的消息。
+          - android:name 的值需要是您项目中实际创建的 Receiver 类路径。
+          - android:exported 设置为 false 更安全。
+      -->
+      <receiver
+          android:name=".push.JPushReceiver"
+          android:enabled="true"
+          android:exported="false" >
+          <intent-filter>
+              <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+              <category android:name="${JPUSH_PKGNAME}" />
+          </intent-filter>
+      </receiver>
+      <!-- END: 新增 JPush 配置 -->
+
       <!-- Android 14 requires the correct Foreground Service (FGS) type for RNShare -->
       <service
           android:name="androidx.work.impl.foreground.SystemForegroundService"
