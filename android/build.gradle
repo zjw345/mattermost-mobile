@@ -33,6 +33,12 @@ buildscript {
 
 allprojects {
     repositories {
+
+        // START: 新增代码
+        mavenCentral()
+        google()
+        // END: 新增代码
+        
         maven {
             url "$rootDir/../detox/node_modules/detox/Detox-android"
         }
