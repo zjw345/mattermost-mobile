@@ -134,6 +134,24 @@
       </receiver>
       <!-- END: 新增 JPush 配置 -->
 
+
+      <!-- START: 新增 JPush Service 配置 -->
+        <!--
+            这个 Service 是为了满足 JCore 核心库的运行要求，以保持推送长连接的稳定性。
+            - android:name 的值需要是您项目中实际创建的 Service 类路径。
+            - android:process=":pushcore" 让服务在独立的进程中运行，提高稳定性。
+        -->
+        <service
+            android:name=".push.JPushService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":pushcore">
+            <intent-filter>
+                <action android:name="cn.jiguang.user.service.action" />
+            </intent-filter>
+        </service>
+        <!-- END: 新增 JPush Service 配置 -->  
+
       <!-- Android 14 requires the correct Foreground Service (FGS) type for RNShare -->
       <service
           android:name="androidx.work.impl.foreground.SystemForegroundService"
