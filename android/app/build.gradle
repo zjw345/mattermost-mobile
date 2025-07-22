@@ -121,8 +121,8 @@ android {
 
         // START: 新增代码
         manifestPlaceholders = [
-            JPUSH_PKGNAME : "com.mattermost.rn", // 必须与您在极光官网注册的包名一致
-            JPUSH_APPKEY  : "c20b61346ec9bdb798ced200", // 替换为您的 Appkey
+            JPUSH_PKGNAME : "com.mattermost.rnbeta", // 必须与您在极光官网注册的包名一致
+            JPUSH_APPKEY  : "e6b34c2bc86dc8582f3a3fd1", // 替换为您的 Appkey
             JPUSH_CHANNEL : "developer-default" // 渠道名，可保持默认
         ]
         // END: 新增代码
