@@ -2,6 +2,11 @@ package com.mattermost.rnbeta
 
 
 import android.annotation.SuppressLint
+
+// START: 新增代码
+import cn.jpush.android.api.JPushInterface
+// END: 新增代码
+
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -61,6 +66,12 @@ class MainApplication : NavigationApplication(), INotificationsApplication {
 
     override fun onCreate() {
         super.onCreate()
+
+        // START: 新增代码
+        // 初始化 JPush
+        JPushInterface.setDebugMode(BuildConfig.DEBUG) // 调试模式，发布时建议关闭
+        JPushInterface.init(this)
+        // END: 新增代码
 
         // Delete any previous temp files created by the app
         val tempFolder = File(applicationContext.cacheDir, RealPathUtil.CACHE_DIR_NAME)
